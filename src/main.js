@@ -118,12 +118,53 @@ let targetScroll = 0;
 let currentScroll = 0;
 const ease = 0.075; // Lower = smoother/slower catchup
 
+// Mouse Parallax Logic
+let mouseTarget = { x: 0, y: 0 };
+let mouseCurrent = { x: 0, y: 0 };
+const mouseEase = 0.1;
+
+window.addEventListener('mousemove', (e) => {
+  // Normalize mouse position -1 to 1 based on window center
+  mouseTarget.x = (e.clientX / window.innerWidth) * 2 - 1;
+  mouseTarget.y = (e.clientY / window.innerHeight) * 2 - 1;
+});
+
 function animateScroll() {
   // Simple Linear Interpolation (Lerp)
   currentScroll += (targetScroll - currentScroll) * ease;
 
-  // Apply transform
+  // Lerp Mouse
+  mouseCurrent.x += (mouseTarget.x - mouseCurrent.x) * mouseEase;
+  mouseCurrent.y += (mouseTarget.y - mouseCurrent.y) * mouseEase;
+
+  // Apply transform to track
   galleryTrack.style.transform = `translateX(${-currentScroll}px)`;
+
+  // Apply Parallax to Dish Info
+  const dishCards = document.querySelectorAll('.dish-card');
+  const viewportCenter = window.innerWidth / 2;
+
+  dishCards.forEach((card) => {
+    const rect = card.getBoundingClientRect();
+    const cardCenter = rect.left + rect.width / 2;
+    const distFromCenter = cardCenter - viewportCenter;
+
+    // Parallax Offset (Horizontal scroll effect)
+    // As card moves left, text moves slightly slower/faster
+    const parallaxX = distFromCenter * 0.05;
+
+    // Find the info content box
+    const infoContent = card.querySelector('.dish-info-content');
+    if (infoContent) {
+      // Rotate based on mouse (-1 to 1) -> (-10deg to 10deg)
+      // TranslateX for scroll parallax
+      infoContent.style.transform = `
+        translateX(${parallaxX}px) 
+        rotateY(${mouseCurrent.x * 12}deg) 
+        rotateX(${-mouseCurrent.y * 12}deg)
+      `;
+    }
+  });
 
   requestAnimationFrame(animateScroll);
 }

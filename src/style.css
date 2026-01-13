@@ -366,6 +366,8 @@ section {
   max-width: 320px;
   width: auto;
   pointer-events: none;
+  perspective: 1000px;
+  /* Enable 3D space for children */
 }
 
 .dish-info-content {
@@ -375,6 +377,11 @@ section {
   border-radius: 8px;
   backdrop-filter: blur(8px);
   border: 1px solid rgba(0, 0, 0, 0.05);
+  will-change: transform;
+  /* Hint for performance */
+  transform-style: preserve-3d;
+  transition: transform 0.1s ease-out;
+  /* Smooth out small jitters if any */
 }
 
 .dish-number {
@@ -434,93 +441,95 @@ section {
   margin-bottom: var(--space-md);
   color: var(--color-text-secondary);
   font-size: 1.1rem;
-}/* Mobile Optimization (max-width: 768px) */
+}
+
+/* Mobile Optimization (max-width: 768px) */
 @media (max-width: 768px) {
 
-    /* Hero */
-    .hero-title {
-        font-size: 2.5rem;
-    }
+  /* Hero */
+  .hero-title {
+    font-size: 2.5rem;
+  }
 
-    .hero-description {
-        font-size: 1rem;
-        padding: 0 var(--space-md);
-    }
+  .hero-description {
+    font-size: 1rem;
+    padding: 0 var(--space-md);
+  }
 
-    /* Table Scale */
-    .gallery-track {
-        height: 55vh;
-        /* Smaller table on mobile */
-        padding-left: 10vh;
-        /* Smaller margins */
-        padding-right: 10vh;
-    }
+  /* Table Scale */
+  .gallery-track {
+    height: 55vh;
+    /* Smaller table on mobile */
+    padding-left: 10vh;
+    /* Smaller margins */
+    padding-right: 10vh;
+  }
 
-    .table-end-cap {
-        width: 27.5vh;
-        /* Half of 55vh */
-    }
+  .table-end-cap {
+    width: 27.5vh;
+    /* Half of 55vh */
+  }
 
-    .table-end-cap:first-child .table-surface-end {
-        border-top-left-radius: 27.5vh;
-        border-bottom-left-radius: 27.5vh;
-    }
+  .table-end-cap:first-child .table-surface-end {
+    border-top-left-radius: 27.5vh;
+    border-bottom-left-radius: 27.5vh;
+  }
 
-    .table-end-cap.is-right .table-surface-end {
-        border-top-right-radius: 27.5vh;
-        border-bottom-right-radius: 27.5vh;
-    }
+  .table-end-cap.is-right .table-surface-end {
+    border-top-right-radius: 27.5vh;
+    border-bottom-right-radius: 27.5vh;
+  }
 
-    /* Chairs: Switch to 2-chair layout (Top/Bottom Center) */
-    .chair-top-right,
-    .chair-bottom-right {
-        display: none;
-        /* Hide extra chairs */
-    }
+  /* Chairs: Switch to 2-chair layout (Top/Bottom Center) */
+  .chair-top-right,
+  .chair-bottom-right {
+    display: none;
+    /* Hide extra chairs */
+  }
 
-    .chair-top-left {
-        left: 50%;
-        /* Center the remaining top chair */
-        transform: translateX(-50%) rotate(180deg);
-    }
+  .chair-top-left {
+    left: 50%;
+    /* Center the remaining top chair */
+    transform: translateX(-50%) rotate(180deg);
+  }
 
-    .chair-bottom-left {
-        left: 50%;
-        /* Center the remaining bottom chair */
-        transform: translateX(-50%);
-    }
+  .chair-bottom-left {
+    left: 50%;
+    /* Center the remaining bottom chair */
+    transform: translateX(-50%);
+  }
 
-    /* Head/Foot Chairs: Adjust position for smaller caps */
-    .chair-head {
-        left: -5vh;
-        width: 20vh;
-        height: 20vh;
-    }
+  /* Head/Foot Chairs: Adjust position for smaller caps */
+  .chair-head {
+    left: -5vh;
+    width: 20vh;
+    height: 20vh;
+  }
 
-    .chair-foot {
-        right: -5vh;
-        width: 20vh;
-        height: 20vh;
-    }
+  .chair-foot {
+    right: -5vh;
+    width: 20vh;
+    height: 20vh;
+  }
 
-    /* Dish Info: Move to Bottom */
-    .dish-info {
-        top: auto;
-        bottom: 5%;
-        right: 5%;
-        left: 5%;
-        transform: none;
-        max-width: none;
-        width: auto;
-    }
+  /* Dish Info: Move to Bottom */
+  .dish-info {
+    top: auto;
+    bottom: 5%;
+    right: 5%;
+    left: 5%;
+    transform: none;
+    max-width: none;
+    width: auto;
+  }
 
-    .dish-info-content {
-        background: rgba(255, 255, 255, 0.85);
-        /* More opaque for text reading over table? */
-        padding: 1rem;
-    }
+  .dish-info-content {
+    background: rgba(255, 255, 255, 0.85);
+    /* More opaque for text reading over table? */
+    padding: 1rem;
+  }
 
-    .dish-title {
-        font-size: 1.4rem;
-    }
+  .dish-title {
+    font-size: 1.4rem;
+  }
 }
