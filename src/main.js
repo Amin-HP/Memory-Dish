@@ -153,16 +153,24 @@ function animateScroll() {
     // As card moves left, text moves slightly slower/faster
     const parallaxX = distFromCenter * 0.05;
 
+    // Opacity Logic: Fade out as it leaves center
+    // Visible zone: +/- 90% of viewport width (Increased to nearly full screen)
+    const fadeDistance = window.innerWidth * 0.9;
+    let opacity = 1 - (Math.abs(distFromCenter) / fadeDistance);
+    if (opacity < 0) opacity = 0;
+    if (opacity > 1) opacity = 1;
+
     // Find the info content box
     const infoContent = card.querySelector('.dish-info-content');
     if (infoContent) {
-      // Rotate based on mouse (-1 to 1) -> (-10deg to 10deg)
-      // TranslateX for scroll parallax
+      // Rotation: Increased Intensity (12 -> 25)
+      // Opacity: Applied calculated value
       infoContent.style.transform = `
         translateX(${parallaxX}px) 
-        rotateY(${mouseCurrent.x * 12}deg) 
-        rotateX(${-mouseCurrent.y * 12}deg)
+        rotateY(${mouseCurrent.x * 25}deg) 
+        rotateX(${-mouseCurrent.y * 25}deg)
       `;
+      infoContent.style.opacity = opacity;
     }
   });
 
@@ -196,6 +204,16 @@ window.addEventListener('scroll', () => {
   const maxTranslate = trackWidth - window.innerWidth;
 
   targetScroll = progress * maxTranslate;
+});
+
+// Navbar Scroll Effect (Shrink on scroll)
+const navbar = document.querySelector('.navbar');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 50) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
 });
 
 // Render Outro

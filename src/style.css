@@ -55,6 +55,15 @@ body {
   z-index: 100;
   background: rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(10px);
+  transition: padding 0.3s ease, background 0.3s ease;
+  /* Smooth shrink */
+}
+
+.navbar.scrolled {
+  padding: 0.75rem var(--space-xl);
+  /* Shrink vertical padding */
+  background: rgba(255, 255, 255, 0.8);
+  /* More opaque when scrolled */
 }
 
 .logo {
@@ -352,36 +361,44 @@ section {
 /* Overlay Info (Right Side) */
 .dish-info {
   position: absolute;
-  top: 50%;
-  right: 15%;
-  /* Move to Right */
-  left: auto;
-  /* Reset Left */
-  transform: translateY(-50%);
-  /* Center Vertically */
+  top: auto;
+  /* Reset Top */
+  bottom: 0%;
+  /* Lower placement */
+  left: 50%;
+  /* Center Horizontally */
+  right: auto;
+  transform: translateX(-50%);
+  /* Center perfectly */
   z-index: 40;
-  text-align: left;
+  text-align: center;
+  /* Center text */
   color: #333;
   padding: 0;
-  max-width: 320px;
-  width: auto;
+  max-width: 400px;
+  /* Smaller width */
+  width: max-content;
   pointer-events: none;
   perspective: 1000px;
   /* Enable 3D space for children */
 }
 
 .dish-info-content {
-  background: rgba(255, 255, 255, 0.4);
-  /* Slightly more opaque for readability */
-  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.6);
+  /* High contrast for readability */
+  padding: 1rem;
+  /* More compact */
   border-radius: 8px;
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  will-change: transform;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  will-change: transform, opacity;
   /* Hint for performance */
   transform-style: preserve-3d;
   transition: transform 0.1s ease-out;
   /* Smooth out small jitters if any */
+  opacity: 0;
+  /* Start hidden, JS will animate in */
 }
 
 .dish-number {
