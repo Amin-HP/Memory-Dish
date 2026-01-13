@@ -1,39 +1,27 @@
 :root {
   /* HSL Color Palette */
-  --hue-primary: 220;  /* Deep Blue */
-  --hue-secondary: 340; /* Vibrant Pink/Red */
-  
+  --hue-primary: 220;
   --color-primary: hsl(var(--hue-primary), 90%, 55%);
-  --color-primary-dark: hsl(var(--hue-primary), 90%, 40%);
-  --color-secondary: hsl(var(--hue-secondary), 85%, 60%);
-  
-  --color-bg: hsl(220, 20%, 97%);
-  --color-surface: hsl(0, 0%, 100%);
-  --color-text: hsl(220, 40%, 20%);
-  --color-text-light: hsl(220, 20%, 60%);
+  --color-bg: #e8e6e1;
+  /* Light Floor */
+  --color-text: #333;
+  /* Dark Text */
+  --color-text-secondary: #666;
 
   /* Typography */
-  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  
+  --font-sans: 'Outfit', 'Inter', system-ui, sans-serif;
+  --font-serif: 'Playfair Display', serif;
+  /* Elegant serif for titles if loaded */
+
   /* Spacing */
-  --space-xs: 0.5rem;
-  --space-sm: 1rem;
   --space-md: 1.5rem;
   --space-lg: 2rem;
-  --space-xl: 3rem;
-  
-  /* Radius */
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 20px;
-  
-  /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+  --space-xl: 4rem;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -41,31 +29,498 @@
 
 body {
   font-family: var(--font-sans);
-  background-color: var(--color-bg);
+  background-color: #e8e6e1;
+  /* Match floor color */
   color: var(--color-text);
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  line-height: 1.6;
+  overflow-x: hidden;
 }
 
 #app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-md) var(--space-xl);
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: var(--space-md);
-  flex: 1;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(10px);
 }
 
-h1, h2, h3 {
-  line-height: 1.1;
+.logo {
   font-weight: 700;
-  color: var(--color-text);
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-button {
-  cursor: pointer;
-  border: none;
-  font-family: inherit;
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: var(--space-lg);
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--color-text);
+  font-weight: 500;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Main Layout */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-top: 0;
+  /* Removing top padding to allow hero to be full screen */
+}
+
+/* Sections */
+section {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+}
+
+/* Hero Section */
+.hero {
+  padding: var(--space-xl);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+}
+
+.hero-title {
+  font-family: var(--font-serif, serif);
+  font-size: 4rem;
+  font-weight: 400;
+  margin-bottom: var(--space-md);
+}
+
+.hero-description {
+  max-width: 600px;
+  color: var(--color-text-secondary);
+  font-size: 1.2rem;
+}
+
+/* Gallery - The "Table" */
+.gallery-scroll-spacer {
+  height: 500vh;
+  /* Determines how "long" the scroll interaction is */
+  position: relative;
+}
+
+/* Room Floor (Viewport) */
+.gallery-sticky-viewport {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  /* Light Floor */
+  background-color: #e8e6e1;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* The Table (Track) */
+.gallery-track {
+  display: flex;
+  height: 75vh;
+  /* Taller Table */
+  width: max-content;
+  will-change: transform;
+  background: transparent;
+  /* No background on track */
+  align-items: center;
+  /* filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.2)); */
+  /* Drop shadow for the whole assembly */
+  position: relative;
+  z-index: 10;
+  /* Margins for the table ends to breathe */
+  padding-left: 20vh;
+  padding-right: 20vh;
+}
+
+/* Table Ends Container */
+.table-end-cap {
+  height: 100%;
+  width: 37.5vh;
+  /* Half of 75vh */
+  flex-shrink: 0;
+  position: relative;
+  z-index: 10;
+  background: transparent;
+  box-shadow: none;
+}
+
+/* Surface for Ends */
+.table-surface-end {
+  width: 100%;
+  height: 100%;
+  background-image: url('/table_texture.png');
+  background-size: auto 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  /* Surface is above chairs */
+}
+
+/* Left End Surface */
+.table-end-cap:first-child .table-surface-end {
+  border-top-left-radius: 37.5vh;
+  border-bottom-left-radius: 37.5vh;
+  margin-right: -1px;
+}
+
+/* Right End Surface */
+.table-end-cap.is-right .table-surface-end {
+  border-top-right-radius: 37.5vh;
+  border-bottom-right-radius: 37.5vh;
+  margin-left: -1px;
+}
+
+/* Head Chair */
+.chair-head {
+  position: absolute;
+  top: 50%;
+  left: -12vh;
+  /* Position relative to the *cap*, sticking out left */
+  transform: translateY(-50%) rotate(90deg);
+  width: 25vh;
+  height: 25vh;
+  background-image: url('/chair.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 5;
+  /* Under Surface (20) */
+  mix-blend-mode: multiply;
+}
+
+/* Foot Chair */
+.chair-foot {
+  position: absolute;
+  top: 50%;
+  right: -12vh;
+  /* Sticking out right */
+  transform: translateY(-50%) rotate(-90deg);
+  width: 25vh;
+  height: 25vh;
+  background-image: url('/chair.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 5;
+  mix-blend-mode: multiply;
+}
+
+/* Dish Component */
+.dish-card {
+  width: 90vw;
+  height: 100%;
+  flex-shrink: 0;
+  background: transparent;
+  border-radius: 0;
+  overflow: visible;
+  box-shadow: none;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  z-index: 10;
+}
+
+/* Place Setting */
+.place-setting {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Table Surface (Middle) */
+.table-surface {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/table_texture.png');
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+  z-index: 20;
+  /* Above chairs */
+}
+
+/* Chairs: 4 per slide */
+.chair-top-left,
+.chair-top-right,
+.chair-bottom-left,
+.chair-bottom-right {
+  position: absolute;
+  width: 28vh;
+  height: 28vh;
+  background-image: url('/chair.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 5;
+  mix-blend-mode: multiply;
+}
+
+.chair-top-left {
+  top: -12vh;
+  left: 25%;
+  transform: translateX(-50%) rotate(180deg);
+}
+
+.chair-top-right {
+  top: -12vh;
+  left: 75%;
+  transform: translateX(-50%) rotate(180deg);
+}
+
+.chair-bottom-left {
+  bottom: -12vh;
+  left: 25%;
+  transform: translateX(-50%);
+}
+
+.chair-bottom-right {
+  bottom: -12vh;
+  left: 75%;
+  transform: translateX(-50%);
+}
+
+
+.cutlery-set {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  height: 60%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  pointer-events: none;
+  z-index: 30;
+  /* Above Table (20) */
+}
+
+.dish-center {
+  z-index: 40;
+  /* Above EVERYTHING */
+  width: 40vh;
+  height: 40vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dish-plate {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  /* Softer shadow for matte look */
+}
+
+/* Overlay Info (Bottom-Left) */
+/* Overlay Info (Right Side) */
+.dish-info {
+  position: absolute;
+  top: 50%;
+  right: 15%;
+  /* Move to Right */
+  left: auto;
+  /* Reset Left */
+  transform: translateY(-50%);
+  /* Center Vertically */
+  z-index: 40;
+  text-align: left;
+  color: #333;
+  padding: 0;
+  max-width: 320px;
+  width: auto;
+  pointer-events: none;
+}
+
+.dish-info-content {
+  background: rgba(255, 255, 255, 0.4);
+  /* Slightly more opaque for readability */
+  padding: 1.5rem;
+  border-radius: 8px;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.dish-number {
+  display: none;
+}
+
+.dish-title {
+  font-family: var(--font-serif, serif);
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+  color: #111;
+  line-height: 1.1;
+}
+
+.artist-name {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #555;
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+}
+
+.dish-medium {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 1rem;
+  font-style: italic;
+  font-family: var(--font-serif, serif);
+}
+
+.dish-description {
+  color: #222;
+  line-height: 1.6;
+  font-size: 0.95rem;
+  font-weight: 400;
+}
+
+
+/* Outro Section */
+.outro {
+  min-height: 100vh;
+  padding: var(--space-xl);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: white;
+  text-align: center;
+}
+
+.outro-content {
+  max-width: 800px;
+}
+
+.outro p {
+  margin-bottom: var(--space-md);
+  color: var(--color-text-secondary);
+  font-size: 1.1rem;
+}/* Mobile Optimization (max-width: 768px) */
+@media (max-width: 768px) {
+
+    /* Hero */
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-description {
+        font-size: 1rem;
+        padding: 0 var(--space-md);
+    }
+
+    /* Table Scale */
+    .gallery-track {
+        height: 55vh;
+        /* Smaller table on mobile */
+        padding-left: 10vh;
+        /* Smaller margins */
+        padding-right: 10vh;
+    }
+
+    .table-end-cap {
+        width: 27.5vh;
+        /* Half of 55vh */
+    }
+
+    .table-end-cap:first-child .table-surface-end {
+        border-top-left-radius: 27.5vh;
+        border-bottom-left-radius: 27.5vh;
+    }
+
+    .table-end-cap.is-right .table-surface-end {
+        border-top-right-radius: 27.5vh;
+        border-bottom-right-radius: 27.5vh;
+    }
+
+    /* Chairs: Switch to 2-chair layout (Top/Bottom Center) */
+    .chair-top-right,
+    .chair-bottom-right {
+        display: none;
+        /* Hide extra chairs */
+    }
+
+    .chair-top-left {
+        left: 50%;
+        /* Center the remaining top chair */
+        transform: translateX(-50%) rotate(180deg);
+    }
+
+    .chair-bottom-left {
+        left: 50%;
+        /* Center the remaining bottom chair */
+        transform: translateX(-50%);
+    }
+
+    /* Head/Foot Chairs: Adjust position for smaller caps */
+    .chair-head {
+        left: -5vh;
+        width: 20vh;
+        height: 20vh;
+    }
+
+    .chair-foot {
+        right: -5vh;
+        width: 20vh;
+        height: 20vh;
+    }
+
+    /* Dish Info: Move to Bottom */
+    .dish-info {
+        top: auto;
+        bottom: 5%;
+        right: 5%;
+        left: 5%;
+        transform: none;
+        max-width: none;
+        width: auto;
+    }
+
+    .dish-info-content {
+        background: rgba(255, 255, 255, 0.85);
+        /* More opaque for text reading over table? */
+        padding: 1rem;
+    }
+
+    .dish-title {
+        font-size: 1.4rem;
+    }
 }
