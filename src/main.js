@@ -59,6 +59,7 @@ const app = document.querySelector('.main-content');
 // Render Hero
 const heroSection = document.createElement('section');
 heroSection.className = 'hero';
+heroSection.id = 'top'; // Target for Logo Link
 heroSection.innerHTML = `
   <h1 class="hero-title">${exhibitionData.title}</h1>
   <p class="hero-description">${exhibitionData.description}</p>
@@ -68,6 +69,7 @@ app.appendChild(heroSection);
 // Render Gallery (Sticky implementation)
 const gallerySpacer = document.createElement('div');
 gallerySpacer.className = 'gallery-scroll-spacer';
+gallerySpacer.id = 'dishes'; // Target for ArtWorks Link
 
 const stickyViewport = document.createElement('div');
 stickyViewport.className = 'gallery-sticky-viewport';
@@ -163,12 +165,12 @@ function animateScroll() {
     // Find the info content box
     const infoContent = card.querySelector('.dish-info-content');
     if (infoContent) {
-      // Rotation: Increased Intensity (12 -> 25)
+      // Rotation: Reduced Intensity (25 -> 15)
       // Opacity: Applied calculated value
       infoContent.style.transform = `
         translateX(${parallaxX}px) 
-        rotateY(${mouseCurrent.x * 25}deg) 
-        rotateX(${-mouseCurrent.y * 25}deg)
+        rotateY(${mouseCurrent.x * 15}deg) 
+        rotateX(${-mouseCurrent.y * 15}deg)
       `;
       infoContent.style.opacity = opacity;
     }

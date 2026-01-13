@@ -27,6 +27,11 @@
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+  /* Enable smooth scrolling for anchor links */
+}
+
 body {
   font-family: var(--font-sans);
   background-color: #e8e6e1;
@@ -71,6 +76,10 @@ body {
   font-size: 1.25rem;
   text-transform: uppercase;
   letter-spacing: 1px;
+  text-decoration: none;
+  /* Remove link underline */
+  color: inherit;
+  /* Maintain text color */
 }
 
 .nav-links {
@@ -146,13 +155,15 @@ section {
   background-color: #e8e6e1;
   border-top: 1px solid rgba(0, 0, 0, 0.05);
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding-top: 8vh;
+  /* Push content down to clear menu */
 }
 
 /* The Table (Track) */
 .gallery-track {
   display: flex;
-  height: 75vh;
-  /* Taller Table */
+  height: 65vh;
+  /* Reduced from 75vh to fit with top padding */
   width: max-content;
   will-change: transform;
   background: transparent;
@@ -170,8 +181,8 @@ section {
 /* Table Ends Container */
 .table-end-cap {
   height: 100%;
-  width: 37.5vh;
-  /* Half of 75vh */
+  width: 32.5vh;
+  /* Half of 65vh */
   flex-shrink: 0;
   position: relative;
   z-index: 10;
@@ -194,15 +205,15 @@ section {
 
 /* Left End Surface */
 .table-end-cap:first-child .table-surface-end {
-  border-top-left-radius: 37.5vh;
-  border-bottom-left-radius: 37.5vh;
+  border-top-left-radius: 32.5vh;
+  border-bottom-left-radius: 32.5vh;
   margin-right: -1px;
 }
 
 /* Right End Surface */
 .table-end-cap.is-right .table-surface-end {
-  border-top-right-radius: 37.5vh;
-  border-bottom-right-radius: 37.5vh;
+  border-top-right-radius: 32.5vh;
+  border-bottom-right-radius: 32.5vh;
   margin-left: -1px;
 }
 
